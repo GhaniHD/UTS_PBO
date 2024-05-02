@@ -1,0 +1,145 @@
+import java.util.Scanner;
+
+// Encapsulation
+class Karyawan {
+    private String nama;
+    private long gaji; // Menggunakan tipe data long untuk gaji
+
+    public Karyawan(String nama, long gaji) {
+        this.nama = nama;
+        this.gaji = gaji;
+    }
+
+    public String getNama() {
+        return nama;
+    }
+
+    public void setNama(String nama) {
+        this.nama = nama;
+    }
+
+    public long getGaji() {
+        return gaji;
+    }
+
+    public void setGaji(long gaji) {
+        this.gaji = gaji;
+    }
+}
+
+// Inheritance
+class Manajer extends Karyawan {
+    private String departemen;
+    private long gaji;
+
+    public Manajer(String nama, long gaji, String departemen) {
+        super(nama, gaji);
+        this.departemen = departemen;
+        this.gaji = gaji;
+    }
+
+    public String getDepartemen() {
+        return departemen;
+    }
+
+    public long getgajiManager() {
+        return gaji;
+    }
+
+    public void setDepartemen(String departemen) {
+        this.departemen = departemen;
+    }
+
+    public void setgajiManager(long gaji) {
+        this.gaji = gaji;
+    }
+}
+
+// Polymorphism
+class Pengembang extends Karyawan {
+    private String bahasaPemrograman;
+
+    public Pengembang(String nama, long gaji, String bahasaPemrograman) {
+        super(nama, gaji);
+        this.bahasaPemrograman = bahasaPemrograman;
+    }
+
+    public String tampilkanDetail() {
+        return getNama() + " adalah seorang pengembang, mahir dalam " + bahasaPemrograman + ". Gaji: " + getGaji();
+    }
+}
+
+// Interface
+interface Berpajak {
+    double hitungPajak();
+}
+
+// Class implementing Interface
+class KalkulatorPajak implements Berpajak {
+    private long gaji; 
+
+    public KalkulatorPajak(long gaji) {
+        this.gaji = gaji;
+    }
+
+    @Override
+    public double hitungPajak() {
+        return 0.1 * gaji;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Input data Karyawan
+        System.out.println("Masukkan nama Karyawan:");
+        String namaKaryawan = scanner.nextLine();
+        System.out.println("Masukkan gaji Karyawan (dalam jutaan):");
+        long gajiKaryawan = scanner.nextLong(); 
+        scanner.nextLine(); 
+
+        // Encapsulation
+        Karyawan karyawan1 = new Karyawan(namaKaryawan, gajiKaryawan);
+        System.out.println("Nama Karyawan: " + karyawan1.getNama());
+        System.out.println("Gaji Karyawan: Rp " + gajiKaryawan);
+
+        // Input data Manajer
+        System.out.println("\nMasukkan nama Manajer:");
+        String namaManajer = scanner.nextLine();
+        System.out.println("Masukkan gaji Manajer (dalam jutaan):");
+        long gajiManajer = scanner.nextLong() ; 
+        scanner.nextLine(); 
+        System.out.println("Masukkan departemen Manajer:");
+        String departemenManajer = scanner.nextLine();
+
+        // Inheritance
+        Manajer manajer = new Manajer(namaManajer, gajiManajer, departemenManajer);
+        System.out.println("\nNama Manajer: " + manajer.getNama());
+        System.out.println("Departemen Manajer: " + manajer.getDepartemen());
+        System.out.println("Gaji Manager: " + manajer.getgajiManager());
+
+        // Input data Pengembang
+        System.out.println("\nMasukkan nama Pengembang:");
+        String namaPengembang = scanner.nextLine();
+        System.out.println("Masukkan gaji Pengembang (dalam jutaan):");
+        long gajiPengembang = scanner.nextLong(); 
+        scanner.nextLine(); 
+        System.out.println("Masukkan bahasa pemrograman yang dikuasai:");
+        String bahasaPemrogramanPengembang = scanner.nextLine();
+
+        // Polymorphism
+        Pengembang pengembang = new Pengembang(namaPengembang, gajiPengembang,bahasaPemrogramanPengembang);
+        System.out.println("\n" + pengembang.tampilkanDetail());
+
+        // Input data untuk menghitung pajak
+        System.out.println("\nMasukkan gaji untuk menghitung pajak (dalam jutaan):");
+        long gajiPajak = scanner.nextLong() ;
+
+        // Interface
+        Berpajak kalkulatorPajak = new KalkulatorPajak(gajiPajak);
+        System.out.println("Pajak yang harus dibayar oleh karyawan: Rp " + kalkulatorPajak.hitungPajak());
+
+        scanner.close();
+    }
+}
